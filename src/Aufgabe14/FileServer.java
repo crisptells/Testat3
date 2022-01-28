@@ -29,9 +29,11 @@ public class FileServer {
 				String content = new String(buf, 0, buf.length);
 				String answer = "";
 				String[] contentArray = content.split(" ", 2);
-				if (contentArray[0] == "READ") {
+				String command = contentArray[0].trim();
+				System.out.println(command);
+				if (command.equals("READ")) {
 					answer = MyFile.read(content);
-				} else if (contentArray[0] == "WRITE") {
+				} else if (command.equals("WRITE")) {
 					answer = MyFile.write(content);
 				} else {
 					answer = "Falscher Befehl";
