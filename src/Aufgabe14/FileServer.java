@@ -1,11 +1,10 @@
 package Aufgabe14;
 
-import java.io.*;
-import java.net.*;
-import java.util.Scanner;
-import java.util.HashMap;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 
-import UDP.ChatServer;
 
 public class FileServer {
 	
