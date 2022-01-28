@@ -27,7 +27,16 @@ public class FileServer {
 				System.out.println("received a packet");
 				buf = packet.getData();
 				String content = new String(buf, 0, buf.length);
-				String answer = MyFile.read(content);
+				String answer = "";
+				String[] contentArray = content.split(" ", 2);
+				if (contentArray[0] == "READ") {
+					answer = MyFile.read(content);
+				} else if (contentArray[0] == "WRITE") {
+					answer = MyFile.write(content);
+				} else {
+					answer = "Falscher Befehl";
+				}
+				
 				buf = answer.getBytes();
 				System.out.println(answer);
 				DatagramPacket sendPacket = new DatagramPacket(buf, buf.length, packet.getAddress(), packet.getPort());
