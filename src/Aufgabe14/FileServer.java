@@ -23,26 +23,24 @@ public class FileServer {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		while(true) {
 			try {
+				packet.setLength(packet.getData().length);
 				server.receive(packet);
-				System.out.println("received a packet");
-				buf = packet.getData();
-				String content = new String(buf, 0, buf.length);
+				String content = "";
+				content = new String(packet.getData(), packet.getOffset(), packet.getLength());
 				String answer = "";
 				String[] contentArray = content.split(" ", 2);
-				String command = contentArray[0].trim();
-				System.out.println(command);
-				if (command.equals("READ")) {
+				if (contentArray[0].equals("READ")) {
 					answer = MyFile.read(content);
-				} else if (command.equals("WRITE")) {
+				} else if (contentArray[0].equals("WRITE")) {
 					answer = MyFile.write(content);
 				} else {
 					answer = "Falscher Befehl";
 				}
 				
-				buf = answer.getBytes();
-				System.out.println(answer);
-				DatagramPacket sendPacket = new DatagramPacket(buf, buf.length, packet.getAddress(), packet.getPort());
+				DatagramPacket sendPacket = new DatagramPacket(answer.getBytes(), answer.length(), packet.getAddress(), packet.getPort());
 				server.send(sendPacket);
+				content = "";
+				buf = null;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
