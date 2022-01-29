@@ -10,7 +10,7 @@ import java.net.InetAddress;
 public class FileClient {
 	
 	public static final int serverPort = 5999;
-	private static byte[] buf = new byte[256];
+	private static byte[] buf = new byte[65535];
 	public static void main(String[] args) {
 		String hostname = "localhost";
 		InetAddress address = null;
@@ -29,7 +29,7 @@ public class FileClient {
 			try {
 				theLine = userIn.readLine();
 				if (theLine.equals(".")) break;
-				DatagramPacket packetSend = new DatagramPacket(theLine.getBytes(), theLine.length(), address, serverPort);
+				DatagramPacket packetSend = new DatagramPacket(theLine.getBytes(), theLine.getBytes().length, address, serverPort);
 				socket.send(packetSend);
 				DatagramPacket packetReceive = new DatagramPacket(buf, buf.length);
 				socket.receive(packetReceive);

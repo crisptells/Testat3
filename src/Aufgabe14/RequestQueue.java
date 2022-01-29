@@ -2,6 +2,7 @@ package Aufgabe14;
 
 import java.net.DatagramPacket;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class RequestQueue {
 	
@@ -13,6 +14,7 @@ public class RequestQueue {
 	}
 	
 	synchronized DatagramPacket getNext() {
+		DatagramPacket returningPacket = null;
 		while(queue.size() == 0) {
 			try {
 				this.wait();
@@ -22,7 +24,15 @@ public class RequestQueue {
 		}
 		DatagramPacket packet = queue.peek();
 		System.out.println(new String(packet.getData(), 0, packet.getLength()));
-		return queue.pop();
+		try {
+			returningPacket = queue.pop();
+			System.out.println("Element gefunden:)");
+			//return returningPacket;
+		} catch (NoSuchElementException e) {
+			System.out.println("Kein element in der queue gefunden :(");
+			e.printStackTrace();
+		}
+		return packet;
 	}
 	
 	public int size() {

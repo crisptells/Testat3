@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class Worker extends Thread{
 	private int id;
-	private byte[] buf = new byte[256];
+	private byte[] buf;
 	private DatagramSocket server;
 	private RequestQueue queue;
 	
@@ -23,10 +23,8 @@ public class Worker extends Thread{
 		DatagramPacket packet = queue.getNext();
 		System.out.println("Worker: " + id + " started working");
 		buf = packet.getData();
-		System.out.println("Instant nach packet.getData()");
 		String content = new String(buf, 0, buf.length);
-		//String content = new String(packet.getData(), 0, packet.getLength());
-		//String content = "WRITE Testdokument,2,hllo";
+		System.out.println("Instant nach packet.getData()");
 		System.out.println("content: " + content);
 		String[] contentArray = content.split(" ", 2);
 		String answer = "";
