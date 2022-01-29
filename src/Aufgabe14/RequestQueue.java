@@ -23,11 +23,12 @@ public class RequestQueue {
 			}
 		}
 		DatagramPacket packet = queue.peek();
-		System.out.println(new String(packet.getData(), 0, packet.getLength()));
+		System.out.println(this.size());
 		try {
 			returningPacket = queue.pop();
 			System.out.println("Element gefunden:)");
-			//return returningPacket;
+			System.out.println(this.size());
+			return returningPacket;
 		} catch (NoSuchElementException e) {
 			System.out.println("Kein element in der queue gefunden :(");
 			e.printStackTrace();

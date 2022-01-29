@@ -33,7 +33,7 @@ public class FileServer {
 				packet.setLength(packet.getData().length);
 				server.receive(packet);
 				System.out.println("packet angekommen");
-				System.out.println(new String(packet.getData(), 0, packet.getLength()));
+				//System.out.println(new String(packet.getData(), 0, packet.getLength()));
 				queue.add(packet);
 				System.out.println("packet in der queue");
 			}
