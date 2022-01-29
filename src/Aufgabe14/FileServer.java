@@ -30,10 +30,8 @@ public class FileServer {
 			startWorkers(10);
 			System.out.println("threads gestartet");
 			while (true) {
-				packet.setLength(packet.getData().length);
 				server.receive(packet);
 				System.out.println("packet angekommen");
-				//System.out.println(new String(packet.getData(), 0, packet.getLength()));
 				queue.add(packet);
 				System.out.println("packet in der queue");
 			}

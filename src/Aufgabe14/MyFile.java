@@ -2,20 +2,39 @@ package Aufgabe14;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.DatagramPacket;
 import java.util.Scanner;
 
 public class MyFile {
 	
+	public static String readPacket(DatagramPacket packet) {
+		byte[] buf;
+		buf = packet.getData();
+		return new String(buf, 0, buf.length);
+	}
 	
-	public static String read(String content) {
+	public static DatagramPacket process(DatagramPacket packet) {
+		DatagramPacket answer = null;
+		String content = readPacket(packet);
+		String[] contentArray = content.split(" ", 2);
+		if (contentArray[0].equals("READ")) {
+			System.out.println("READ Methode erkannt");
+			answer = read(packet);
+		} else if (contentArray[0].equals("WRITE")) {
+			answer = write(packet);
+		} 
+		return answer;
+	}
+	
+	public static DatagramPacket read(DatagramPacket packet) {
+		String content = readPacket(packet);
 		String[] contentArray = content.split(" ", 2);
 		String[] subArray = contentArray[1].split(",", 2);
 		
-		if (contentArray.length != 2) {return "Fehler! - Falscher command";}
-		if (subArray.length != 2) {return "Fehler! - Falscher command";}
+		if (contentArray.length != 2) {return null;}
+		if (subArray.length != 2) {return null;}
 		if (contentArray[0].equals("READ")) {
 			//Datei mit dem Namen des Keys lokalisieren
 			String userName = System.getProperty("user.name");
@@ -35,21 +54,24 @@ public class MyFile {
 		        String line = line_string.trim();
 		        int line_no = Integer.parseInt(line);
 		        System.out.println(data[line_no]);
-		        return data[line_no];
+		        String line_data = data[line_no];
+		        DatagramPacket sendPacket = new DatagramPacket(line_data.getBytes(), line_data.getBytes().length, packet.getAddress(), packet.getPort());
+		        return sendPacket;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-	        
 		}
-		return "Fehler";
+		return null;
 	}
 	
-	public static String write(String content) {
+	public static DatagramPacket write(DatagramPacket packet) {
+		String content = readPacket(packet);
+		String answer = "Error";
 		String[] contentArray = content.split(" ", 2);
 		String[] subArray = contentArray[1].split(",");
 		
-		if (contentArray.length != 2) {return "Fehler! - Falscher command";}
-		if (subArray.length != 3) {return "Fehler! - Falscher command";}
+		if (contentArray.length != 2) {return null;}
+		if (subArray.length != 3) {return null;}
 		if (contentArray[0].equals("WRITE")) {
 			String fileName = subArray[0];
 			String line_no = subArray[1];
@@ -79,7 +101,7 @@ public class MyFile {
 		        }
 		        myReader.close();
 			} catch (FileNotFoundException e) {
-				return "Fehler beim lesen der Datei";
+				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			}
 			
 			//Ändern der gegebenen Zeile
@@ -93,12 +115,13 @@ public class MyFile {
 					fileOut.println(s);
 				}
 				fileOut.close();
-				return "Hat geklappt";
+				answer = "Hat geklappt!";
+				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
 		}
-		return "Fehler, kein Befehl erkannt";
+		return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 	}
 }
