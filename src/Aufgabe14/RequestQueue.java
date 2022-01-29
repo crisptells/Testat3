@@ -20,6 +20,8 @@ public class RequestQueue {
 				e.printStackTrace();
 			}
 		}
+		DatagramPacket packet = queue.peek();
+		System.out.println(new String(packet.getData(), 0, packet.getLength()));
 		return queue.pop();
 	}
 	
