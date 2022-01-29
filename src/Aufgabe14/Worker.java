@@ -27,7 +27,7 @@ public class Worker extends Thread{
 		System.out.println("Instant nach packet.getData()");
 		System.out.println("content: " + content);
 		String[] contentArray = content.split(" ", 2);
-		String answer = "";
+		String answer = "Error";
 		System.out.println("packet im Worker angekommen");
 		if (contentArray[0].equals("READ")) {
 			System.out.println("READ Methode erkannt");
