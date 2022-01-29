@@ -7,49 +7,56 @@ import java.net.SocketException;
 
 
 public class FileServer {
-	
+	private RequestQueue queue;
 	public final static int DEFAULT_PORT = 5999;
 	private byte[] buf = new byte[256];
 	private DatagramSocket server;
-	public FileServer(int port) {
-		try {
-			server = new DatagramSocket(port);
-		} catch (SocketException e) {
-			e.printStackTrace();
+	private Worker[] workerPool;
+	//Worker Threads erstellen und in den Pool schreiben
+	private void startWorkers(int Anzahl) {
+		for(int i = 0; i<Anzahl; i++) {
+			workerPool[i] = new Worker(i, queue, server);
 		}
 	}
 	
 	public void start() {
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);
-		while(true) {
-			try {
+		queue = new RequestQueue();
+		workerPool = new Worker[10];
+		
+		try {
+			server = new DatagramSocket(5999);
+			startWorkers(10);
+			startThreads();
+			System.out.println("threads gestartet");
+			while (true) {
 				packet.setLength(packet.getData().length);
 				server.receive(packet);
-				String content = "";
-				content = new String(packet.getData(), packet.getOffset(), packet.getLength());
-				String answer = "";
-				String[] contentArray = content.split(" ", 2);
-				if (contentArray[0].equals("READ")) {
-					answer = MyFile.read(content);
-				} else if (contentArray[0].equals("WRITE")) {
-					answer = MyFile.write(content);
-				} else {
-					answer = "Falscher Befehl";
-				}
-				
-				DatagramPacket sendPacket = new DatagramPacket(answer.getBytes(), answer.length(), packet.getAddress(), packet.getPort());
-				server.send(sendPacket);
-				content = "";
-				buf = null;
-			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("packet angekommen");
+				System.out.println(new String(packet.getData(), 0, packet.getLength()));
+				queue.add(packet);
+				System.out.println("packet in der queue");
 			}
-			
+		} catch (SocketException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void startThreads() {
+		for(Worker w: workerPool) {
+			if (w.isWorking() == false) {
+				w.setWorking(true);
+				Thread t = new Thread(w);
+				t.start();
+				return;
 			}
 		}
+	}
 	
 	public static void main(String[] args) {
-		FileServer server = new FileServer(DEFAULT_PORT);
+		FileServer server = new FileServer();
 		server.start();
 	}
 	
