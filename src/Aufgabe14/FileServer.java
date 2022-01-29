@@ -9,13 +9,14 @@ import java.net.SocketException;
 public class FileServer {
 	private RequestQueue queue;
 	public final static int DEFAULT_PORT = 5999;
-	private byte[] buf = new byte[256];
+	private byte[] buf = new byte[65535];
 	private DatagramSocket server;
 	private Worker[] workerPool;
 	//Worker Threads erstellen und in den Pool schreiben
 	private void startWorkers(int Anzahl) {
 		for(int i = 0; i<Anzahl; i++) {
 			workerPool[i] = new Worker(i, queue, server);
+			workerPool[i].start();
 		}
 	}
 	
@@ -27,7 +28,6 @@ public class FileServer {
 		try {
 			server = new DatagramSocket(5999);
 			startWorkers(10);
-			startThreads();
 			System.out.println("threads gestartet");
 			while (true) {
 				packet.setLength(packet.getData().length);
@@ -41,17 +41,6 @@ public class FileServer {
 			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-	
-	public void startThreads() {
-		for(Worker w: workerPool) {
-			if (w.isWorking() == false) {
-				w.setWorking(true);
-				Thread t = new Thread(w);
-				t.start();
-				return;
-			}
 		}
 	}
 	

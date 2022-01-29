@@ -7,7 +7,6 @@ import java.util.LinkedList;
 
 public class Worker extends Thread{
 	private int id;
-	private boolean working;
 	private byte[] buf = new byte[256];
 	private DatagramSocket server;
 	private RequestQueue queue;
@@ -48,14 +47,5 @@ public class Worker extends Thread{
 			e.printStackTrace();
 		}
 		
-		this.working = false;
-	}
-
-	public boolean isWorking() {
-		return working;
-	}
-
-	public void setWorking(boolean working) {
-		this.working = working;
 	}
 }
