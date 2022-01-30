@@ -22,18 +22,10 @@ public class RequestQueue {
 				e.printStackTrace();
 			}
 		}
-		DatagramPacket packet = queue.peek();
-		System.out.println(this.size());
-		try {
-			returningPacket = queue.pop();
-			System.out.println("Element gefunden:)");
-			System.out.println(this.size());
-			return returningPacket;
-		} catch (NoSuchElementException e) {
-			System.out.println("Kein element in der queue gefunden :(");
-			e.printStackTrace();
-		}
-		return packet;
+		
+		returningPacket = queue.pop();
+		System.out.println("Element gefunden:)");
+		return returningPacket;
 	}
 	
 	public int size() {

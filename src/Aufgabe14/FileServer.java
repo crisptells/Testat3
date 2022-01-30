@@ -32,6 +32,7 @@ public class FileServer {
 			while (true) {
 				server.receive(packet);
 				System.out.println("packet angekommen");
+				//System.out.println(new String(packet.getData(), 0, packet.getLength()));
 				queue.add(packet);
 				System.out.println("packet in der queue");
 			}
