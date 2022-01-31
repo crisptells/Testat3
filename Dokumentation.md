@@ -32,10 +32,10 @@ Der Server nimmt auf Port 5999 Aufträge entgegen. Es existieren zwei Text Datei
 
 Im ersten Beispiel soll das parallele lesen einer Datei möglich sein.
 
+	READ Testdokument,1
 	READ Testdokument,2
-	READ Testdokument,2
-	Das ist Zeile 222
-	Das ist Zeile 222
+	Das ist Zeile 1
+	Das ist Zeile 2
 
 
 ### Auswertung - Beispiel 1
@@ -46,6 +46,12 @@ Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nich
 
 Im zweiten Beispiel soll es möglich sein das gleichzeitig ausgeführte "WRITE" Befehle auf eine Datei ausgeführt werden können.
 
+	READ Testdokument,1
+	READ Testdokument,2
+	Das ist Zeile 1
+	Das ist Zeile 2
+
+
 ### Auswertung - Beispiel 2
 
 Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt den Thread warten und gibt ihn erst dann frei wenn kein Leser oder Schreiber mehr Zugriff auf die Datei hat.
@@ -53,6 +59,12 @@ Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt 
 ### Beispiel 3
 
 In diesem Beispiel soll die Schreiberpriorität gewährleistet werden, sollte ein Leser- und ein Schreiberauftrg parallel abgeschickt werden.
+
+	READ Testdokument,1
+	READ Testdokument,2
+	Das ist Zeile 1
+	Das ist Zeile 2
+
 
 ### Auswertung - Beispiel 3
 
@@ -63,6 +75,12 @@ Die Schreiberpriorität wird eingehalten, da zuerst die Schreiber und dann die L
 
 Im vierten Beispiel soll es möglich sein aus mehreren Dateien lesen zu können.
 
+	READ Testdokument,1
+	READ Testdokument,2
+	Das ist Zeile 1
+	Das ist Zeile 2
+
+
 ### Auswertung - Beispiel 4
 
 Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zugegriffen wird.
@@ -72,6 +90,12 @@ Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zuge
 
 In diesem Beispiel soll es möglich sein dass mehrere Schreibzugriffe auf eine Datei abgearbeitet werden.
 
+	READ Testdokument,1
+	READ Testdokument,2
+	Das ist Zeile 1
+	Das ist Zeile 2
+
+
 ### Auswertung - Beispiel 5
 
 Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
@@ -80,6 +104,12 @@ Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
 ### Beispiel 6
 
 Im letzten Beispiel sollen mehrere Lese- und Schreibezugriffe auf mehrere Dateien erfolgreich abgearbeitet werden können.
+
+	READ Testdokument,1
+	READ Testdokument,2
+	Das ist Zeile 1
+	Das ist Zeile 2
+
 
 ### Auswertung - Beispiel 6
 
