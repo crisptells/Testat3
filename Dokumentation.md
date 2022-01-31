@@ -1,6 +1,7 @@
 # Testat - 3
 	
-Luis Maier - Matrikelnummer 7096964 &
+Luis Maier - Matrikelnummer 7096964 
+
 Christian Reitmeier - Matrikelnummer 2923922
 
 ## Aufgabe
