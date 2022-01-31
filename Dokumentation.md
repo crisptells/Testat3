@@ -83,10 +83,16 @@ Die Schreiberpriorität wird eingehalten, da zuerst die Schreiber und dann die L
 
 Im vierten Beispiel soll es möglich sein aus mehreren Dateien lesen zu können.
 
-	READ Testdokument,1
-	READ Testdokument,2
-	Das ist Zeile 1
-	Das ist Zeile 2
+	READ Testdokument1,1
+	READ Testdokument1,2
+	READ Testdokument2,1
+	READ Testdokument2,2
+	
+	Ausgabe:
+	Das ist Zeile 1 vom ersten Dokument
+	Das ist Zeile 2 vom ersten Dokument
+	Das ist Zeile 1 vom zweiten Dokument
+	Das ist Zeile 2 vom zweiten Dokument
 
 
 ### Auswertung - Beispiel 4
@@ -98,10 +104,16 @@ Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zuge
 
 In diesem Beispiel soll es möglich sein dass mehrere Schreibzugriffe auf eine Datei abgearbeitet werden.
 
-	READ Testdokument,1
-	READ Testdokument,2
-	Das ist Zeile 1
-	Das ist Zeile 2
+	WRITE Testdokument1,1,Das ist die neue Zeile 1 im ersten Dokument
+	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
+	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
+	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
+	
+	überschrieben Datei:
+	Das ist die neue Zeile 1 im ersten Dokument
+	Das ist die neue Zeile 2 im ersten Dokument
+	Das ist die neue Zeile 1 im zweiten Dokument
+	Das ist die neue Zeile 2 im zweiten Dokument
 
 
 ### Auswertung - Beispiel 5
@@ -113,10 +125,20 @@ Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
 
 Im letzten Beispiel sollen mehrere Lese- und Schreibezugriffe auf mehrere Dateien erfolgreich abgearbeitet werden können.
 
-	READ Testdokument,1
-	READ Testdokument,2
-	Das ist Zeile 1
-	Das ist Zeile 2
+	READ Testdokument1,1
+	READ Testdokument1,2
+	READ Testdokument2,1
+	READ Testdokument2,2
+	WRITE Testdokument1,1,Das ist die neue Zeile 1 im ersten Dokument
+	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
+	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
+	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
+	
+	Ausgabe:
+	Das ist die neue Zeile 1 im ersten Dokument
+	Das ist die neue Zeile 2 im ersten Dokument
+	Das ist die neue Zeile 1 im zweiten Dokument
+	Das ist die neue Zeile 2 im zweiten Dokument	
 
 
 ### Auswertung - Beispiel 6
