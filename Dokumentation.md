@@ -1,6 +1,6 @@
-# Testat - 2
+# Testat - 3
 	
-Luis Maier - Matrikelnummer 7096964 |
+Luis Maier - Matrikelnummer 7096964 und
 Christian Reitmeier - Matrikelnummer 2923922
 
 ## Aufgabe
@@ -21,29 +21,72 @@ das Zweite Leser-Schreiber-Problem (mit Schreiberpriorität) mit dem Java Monito
 
 Implementieren Sie den Server sowie einen kleinen Test-Client. Verwenden Sie Java und UDP!
 
+### Vorraussetzung
+
+Der Server nimmt auf Port 5999 Aufträge entgegen. Es existieren zwei Text Dateien auf die zugegriffen werden. Der "READ" Befehl gibt die ausgewählte Zeile der Datei aus. Der "WRITE" Befehl überschreibt die ausgewählte Zeile der Datei. Es gibt einen Worker-Thread-Pool der die Befehle ausführt, dieser wird von dem Monitor überwacht. Der Monitor hat Schreiberpriorität.
+
 
 ### Beispiel 1
 
-Im ersten Beispiel...
+Im ersten Beispiel soll das parallele lesen einer Datei möglich sein.
 
 ### Auswertung - Beispiel 1
 
-Die Auswertung...
-
+Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nicht gegenseitig aus. Aufgrund dessen ist dieses Beispiel möglich.
 
 ### Beispiel 2
 
-Im zweiten Beispiel...
+Im zweiten Beispiel soll es möglich sein das gleichzeitig ausgeführte "WRITE" Befehle auf eine Datei ausgeführt werden können.
 
 ### Auswertung - Beispiel 2
 
-Die Auswertung...
-
+Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt den Thread warten und gibt ihn erst dann frei wenn kein Leser oder Schreiber mehr Zugriff auf die Datei hat.
 
 ### Beispiel 3
 
-Im dritten Beispiel...
+In diesem Beispiel soll die Schreiberpriorität gewährleistet werden, sollte ein Leser- und ein Schreiberauftrg parallel abgeschickt werden.
 
 ### Auswertung - Beispiel 3
 
-Die Auswertung...
+Die Schreiberpriorität wird eingehalten, da zuerst die Schreiber und dann die Leser abgearbeitet werden.
+
+
+### Beispiel 4
+
+Im vierten Beispiel soll es möglich sein aus mehreren Dateien lesen zu können.
+
+### Auswertung - Beispiel 4
+
+Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zugegriffen wird.
+
+
+### Beispiel 5
+
+In diesem Beispiel soll es möglich sein dass mehrere Schreibzugriffe auf eine Datei abgearbeitet werden.
+
+### Auswertung - Beispiel 5
+
+Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
+
+
+### Beispiel 6
+
+Im letzten Beispiel sollen mehrere Lese- und Schreibezugriffe auf mehrere Dateien erfolgreich abgearbeitet werden können.
+
+### Auswertung - Beispiel 6
+
+Wie in Beispiel 3 funktioniert auch dieses Beispiel. Die Schreiberpriorität wird eingehalten.
+
+
+### Beispiel 7
+
+In diesem Beispiel werden die Fehler behandelt die auftreten können.
+
+
+### Auswertung - Beispiel 7
+
+
+
+
+
+
