@@ -2,7 +2,6 @@ package Aufgabe14;
 
 import java.net.DatagramPacket;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 public class RequestQueue {
 
@@ -36,5 +35,4 @@ public class RequestQueue {
     public int size() {
         return queue.size();
     }
-
 }

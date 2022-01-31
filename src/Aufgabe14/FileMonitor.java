@@ -1,7 +1,6 @@
 package Aufgabe14;
 
 public class FileMonitor {
-
     boolean activeWriter = false;
     int readerCnt = 0;
     int writerCnt = 0;
