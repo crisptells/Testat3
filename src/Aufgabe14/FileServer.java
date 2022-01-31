@@ -14,8 +14,7 @@ public class FileServer {
 	private byte[] buf = new byte[65535];
 	private DatagramSocket server;
 	private Worker[] workerPool;
-	private Map<String, FileMonitor> monitors = new HashMap<String, FileMonitor>();
-	private MyFile fileHandler = new MyFile(monitors);
+	private MyFile fileHandler;
 	
 	//Worker Threads erstellen und in den Pool schreiben
 	private void startWorkers(int Anzahl) {
@@ -28,9 +27,7 @@ public class FileServer {
 	}
 	
 	public void start() {
-		//Für jede Datei wird ein eigener Monitor erstellt werden
-		monitors.put("Testdokument", new FileMonitor());
-		monitors.put("Test", new FileMonitor());
+		fileHandler = new MyFile();
 		queue = new RequestQueue();
 		workerPool = new Worker[10];
 		try {

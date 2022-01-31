@@ -5,15 +5,25 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.DatagramPacket;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class MyFile {
+	private String path;
 	private Map<String, FileMonitor> monitors;
-	private FileMonitor monitor = null;
+//	private FileMonitor monitor = null;
 	
-	public MyFile(Map<String, FileMonitor> monitors) {
-		this.monitors = monitors;
+	public MyFile() {
+		this.path = System.getProperty("user.home")+"/Desktop/AdvIT14/";
+		this.monitors = new HashMap<>();
+		File directory = new File(path);
+		if(directory.isDirectory()) {
+			File[] files = directory.listFiles();
+			for(File f : files) {
+				monitors.put(f.getName(), new FileMonitor());
+			}
+		}
 	}
 	
 	public static String readPacket(DatagramPacket packet) {
@@ -52,10 +62,9 @@ public class MyFile {
 		if (contentArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
 		if (subArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
 		if (contentArray[0].equals("READ")) {
+			FileMonitor monitor = monitors.get(subArray[0]+".txt");
 			//Datei mit dem Namen des Keys lokalisieren
-			String userName = System.getProperty("user.name");
-	        File myObj = new File("C:/Users/"+userName+"/Desktop/AdvIT14/"+subArray[0]+".txt");
-	        monitor = monitors.get(subArray[0]);
+	        File myObj = new File(path+subArray[0]+".txt");
 	        Scanner myReader;
 	        //Starten der Monitormethode lesen
 	        monitor.startRead();
@@ -104,14 +113,12 @@ public class MyFile {
 		if (contentArray.length != 2) {return null;}
 		if (subArray.length != 3) {return null;}
 		if (contentArray[0].equals("WRITE")) {
+			FileMonitor monitor = monitors.get(subArray[0]+".txt");
 			String fileName = subArray[0];
 			String line_no = subArray[1];
 			String contents = subArray[2];
 			//Datei mit dem Namen des Keys lokalisieren
-			String userName = System.getProperty("user.name");
-	        File myObj = new File("C:/Users/"+userName+"/Desktop/AdvIT14/"+fileName+".txt");
-	        //Den Monitor anhand des Dateinamens auslesen
-	        monitor = monitors.get(fileName);
+	        File myObj = new File(path+fileName+".txt");
 	        String[] data = null;
 	        Scanner myReader;
 	        Scanner lineCounter;
