@@ -10,8 +10,9 @@ public class Worker extends Thread{
 	private byte[] buf;
 	private DatagramSocket server;
 	private RequestQueue queue;
+	private FileMonitor monitor;
 	
-	public Worker(int id, RequestQueue q, DatagramSocket server) {
+	public Worker(int id, RequestQueue q, DatagramSocket server, FileMonitor m) {
 		this.id = id;
 		this.queue = q;
 		this.server = server;
@@ -22,7 +23,7 @@ public class Worker extends Thread{
 		while (true) {
 			DatagramPacket packet = queue.getNext();
 			System.out.println("Worker: " + id + " started working");
-			DatagramPacket sendPacket = MyFile.process(packet);
+			DatagramPacket sendPacket = MyFile.process(packet, m);
 			try {
 				server.send(sendPacket);
 			} catch (IOException e) {

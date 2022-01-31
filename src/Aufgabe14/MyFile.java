@@ -15,20 +15,20 @@ public class MyFile {
 		return new String(buf, 0, buf.length);
 	}
 	
-	public static DatagramPacket process(DatagramPacket packet) {
+	public static DatagramPacket process(DatagramPacket packet, FileMonitor m) {
 		DatagramPacket answer = null;
 		String content = readPacket(packet);
 		String[] contentArray = content.split(" ", 2);
 		if (contentArray[0].equals("READ")) {
 			System.out.println("READ Methode erkannt");
-			answer = read(packet);
+			answer = read(packet, m);
 		} else if (contentArray[0].equals("WRITE")) {
-			answer = write(packet);
+			answer = write(packet, m);
 		} 
 		return answer;
 	}
 	
-	public static DatagramPacket read(DatagramPacket packet) {
+	public static DatagramPacket read(DatagramPacket packet, FileMonitor m) {
 		String content = readPacket(packet);
 		String[] contentArray = content.split(" ", 2);
 		String[] subArray = contentArray[1].split(",", 2);
@@ -39,8 +39,9 @@ public class MyFile {
 			//Datei mit dem Namen des Keys lokalisieren
 			String userName = System.getProperty("user.name");
 	        File myObj = new File("C:/Users/"+userName+"/Desktop/AdvIT14/"+subArray[0]+".txt");
-
+	        
 	        Scanner myReader;
+	        
 			try {
 				myReader = new Scanner(myObj);
 				String[] data = new String[255];
@@ -49,6 +50,7 @@ public class MyFile {
 		        	data[i] = myReader.nextLine();
 		        	i++;
 		        }
+		        
 		        myReader.close();
 		        String line_string = subArray[1];
 		        String line = line_string.trim();
@@ -64,7 +66,7 @@ public class MyFile {
 		return null;
 	}
 	
-	public static DatagramPacket write(DatagramPacket packet) {
+	public static DatagramPacket write(DatagramPacket packet, FileMonitor m) {
 		String content = readPacket(packet);
 		String answer = "Error";
 		String[] contentArray = content.split(" ", 2);
