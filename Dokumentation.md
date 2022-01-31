@@ -139,12 +139,15 @@ Wie in Beispiel 3 funktioniert auch dieses Beispiel. Die Schreiberpriorität wir
 
 ### Beispiel 7
 
-In diesem Beispiel werden die Fehler behandelt die auftreten können.
+In diesem Beispiel wird ein falscher Dokumentname mitgegeben, danach ein richtiger. 
 
+	READ nichtTestdokument,2
+	READ Testdokument,2
+	Neue zeile 2
 
 ### Auswertung - Beispiel 7
 
-
+Der fehlerhafte Befehl wird nicht ausgeführt, der Fehlerfreie aber trotzdem.
 
 
 
