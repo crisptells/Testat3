@@ -4,6 +4,7 @@ Luis Maier - Matrikelnummer 7096964
 
 Christian Reitmeier - Matrikelnummer 2923922
 
+
 ## Aufgabe
 
 In dieser Aufgabe soll ein File-Server für Textdateien entwickelt werden.
