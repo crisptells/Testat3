@@ -41,7 +41,7 @@ public class MyFile {
 	        File myObj = new File("C:/Users/"+userName+"/Desktop/AdvIT14/"+subArray[0]+".txt");
 	        
 	        Scanner myReader;
-	        
+	        m.startRead();
 			try {
 				myReader = new Scanner(myObj);
 				String[] data = new String[255];
@@ -62,6 +62,7 @@ public class MyFile {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+			m.stopRead();
 		}
 		return null;
 	}
@@ -85,6 +86,7 @@ public class MyFile {
 	        String[] data = null;
 	        Scanner myReader;
 	        Scanner lineCounter;
+	        m.startRead();
 			try {
 				lineCounter = new Scanner(myObj);
 				int lines = 0;
@@ -105,12 +107,14 @@ public class MyFile {
 			} catch (FileNotFoundException e) {
 				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			}
-			
+			m.stopRead();
+			;
 			//Ändern der gegebenen Zeile
 			int line_noInt = Integer.parseInt(line_no.trim());
 			data[line_noInt-1] = contents;
 			
 			//Überschreiben der gegebenen Datei
+			m.startWrite();
 			try {
 				PrintWriter fileOut = new PrintWriter(myObj);
 				for(String s: data) {
@@ -122,6 +126,7 @@ public class MyFile {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			m.stopWrite();
 			
 		}
 		return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());

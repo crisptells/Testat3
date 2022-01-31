@@ -23,7 +23,7 @@ public class Worker extends Thread{
 		while (true) {
 			DatagramPacket packet = queue.getNext();
 			System.out.println("Worker: " + id + " started working");
-			DatagramPacket sendPacket = MyFile.process(packet, m);
+			DatagramPacket sendPacket = MyFile.process(packet, monitor);
 			try {
 				server.send(sendPacket);
 			} catch (IOException e) {
