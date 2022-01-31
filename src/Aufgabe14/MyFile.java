@@ -17,40 +17,51 @@ public class MyFile {
 	}
 	
 	public static String readPacket(DatagramPacket packet) {
+		//Auswerten des Packetes und zurückgeben des Strings, welcher den Befehl enthält
 		return new String(packet.getData(), packet.getOffset(), packet.getLength());
 	}
 	
 	public DatagramPacket process(DatagramPacket packet) {
+		//Initialisieren eines Antwortpackets
 		DatagramPacket answer = null;
+		//Auslesen des Befehls aus dem Packet
 		String content = readPacket(packet);
-		System.out.println(content);
+		//Aufteilen des Befehls in Anweisung (READ oder WRITE) und Inhalt
 		String[] contentArray = content.split(" ", 2);
+		//Abfrage welcher Befehl mitgegeben wurde
 		if (contentArray[0].equals("READ")) {
-			System.out.println("READ Methode erkannt");
+			//Wenn der mitgegebene Befehl READ ist, wird die Methode zum lesen ausgeführt
 			answer = read(packet);
 		} else if (contentArray[0].equals("WRITE")) {
+			//Wenn der mitgegebene Befehl WRITE ist, wird die Methode zum schreiben ausgeführt
 			answer = write(packet);
 		} 
+		//Das fertige Antwortpacket wird zurückgegeben
 		return answer;
 	}
 	
 	public DatagramPacket read(DatagramPacket packet) {
+		//Auslesen des Befehls aus dem Packet 
 		String content = readPacket(packet);
+		//Aufteilen des Befehls in Anweisung (READ oder WRITE) und Inhalt
 		String[] contentArray = content.split(" ", 2);
+		//Aufteilen des Inhalts in Dateiname und Zeilennummer
 		String[] subArray = contentArray[1].split(",", 2);
+		//Wenn der aufgeteilte Befehl oder der aufgeteilte Inhalt != zwei Elemente groß sind, stimmt etwas mit dem Anfragebefehl nicht
 		if (contentArray.length != 2) {return null;}
 		if (subArray.length != 2) {return null;}
 		if (contentArray[0].equals("READ")) {
-			System.out.println(subArray[1]);
 			//Datei mit dem Namen des Keys lokalisieren
 			String userName = System.getProperty("user.name");
 	        File myObj = new File("C:/Users/"+userName+"/Desktop/AdvIT14/"+subArray[0]+".txt");
 	        monitor = monitors.get(subArray[0]);
 	        Scanner myReader;
+	        //Starten der Monitormethode zum lesen
 	        monitor.startRead();
 			try {
 				//Simulieren einer längeren Bearbeitungszeit
 				Thread.sleep(2000);
+				//Initialisieren des Scanners, der die Datei auslesen soll
 				myReader = new Scanner(myObj);
 				String[] data = new String[255];
 				int i = 1;
@@ -98,8 +109,7 @@ public class MyFile {
 	        Scanner myReader;
 	        Scanner lineCounter;
 	        System.out.println("kurz vor monitor.startRead");
-	        monitor.startRead();
-	        System.out.println("ist im startRead");
+	        monitor.startWrite();
 			try {
 				lineCounter = new Scanner(myObj);
 				int lines = 0;
@@ -122,14 +132,14 @@ public class MyFile {
 			} catch (FileNotFoundException e) {
 				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			}
-			monitor.stopRead();
+			
 			 System.out.println("nach stopRead");
 			//Ändern der gegebenen Zeile
 			int line_noInt = Integer.parseInt(line_no.trim());
 			data[line_noInt-1] = contents.trim();
 			
 			//Überschreiben der gegebenen Datei
-			monitor.startWrite();
+			
 			try {
 				//Simulieren einer längeren Bearbeitungszeit
 				Thread.sleep(2000);

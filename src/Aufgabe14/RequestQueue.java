@@ -7,13 +7,13 @@ public class RequestQueue {
 
     private LinkedList<DatagramPacket> queue = new LinkedList<DatagramPacket>();
 
-    // F√ºgt der Warteschlange ein Packet hinzu und benachrichtig alle
+    // F‰gt der Warteschlange ein Packet hinzu und benachrichtig alle
     synchronized void add(DatagramPacket packet) {
         queue.add(packet);
         this.notify();
     }
 
-    // fordert das n√§chste Packet in der Warteschlange
+    // fordert das n‰chste Packet in der Warteschlange
     synchronized DatagramPacket getNext() {
         // wird an der Warteschlange gewartet wenn es kein Packet gibt
         DatagramPacket returningPacket = null;
@@ -25,13 +25,13 @@ public class RequestQueue {
             }
         }
 
-        // gibt das Packet an der ersten Stelle aus und l√∂scht es danach
+        // gibt das Packet an der ersten Stelle aus und l‰scht es danach
         returningPacket = queue.pop();
         System.out.println("Element gefunden:)");
         return returningPacket;
     }
 
-    // gibt die Gr√∂√üe der Warteschlange
+    // gibt die Grˆﬂe der Warteschlange
     public int size() {
         return queue.size();
     }
