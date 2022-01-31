@@ -27,6 +27,7 @@ Implementieren Sie den Server sowie einen kleinen Test-Client. Verwenden Sie Jav
 
 Der Server nimmt auf Port 5999 Aufträge entgegen. Es existieren zwei Text Dateien auf die zugegriffen werden. Der "READ" Befehl gibt die ausgewählte Zeile der Datei aus. Der "WRITE" Befehl überschreibt die ausgewählte Zeile der Datei. Es gibt einen Worker-Thread-Pool der die Befehle ausführt, dieser wird von dem Monitor überwacht. Der Monitor hat Schreiberpriorität.
 
+In den Beispielen besteht die Ausgabe aus zwei Teilen, dem Teil mit den abgeschickten Befehlen und der Teil mit den Antworten.
 
 ### Beispiel 1
 
@@ -34,15 +35,13 @@ Im ersten Beispiel soll das parallele lesen einer Datei möglich sein.
 
 	READ Testdokument,1
 	READ Testdokument,2
-	
-	Ausgabe:
 	Das ist Zeile 1
 	Das ist Zeile 2
 
 
 ### Auswertung - Beispiel 1
 
-Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nicht gegenseitig aus. Aufgrund dessen ist dieses Beispiel möglich.
+Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nicht gegenseitig aus. Aufgrund dessen ist dieses Beispiel möglich. Die Lese-Anforderungen wurden gleichzeitig abgeschickt und kamen auch gleichzeitig an. Da die Lese-Worker sich nicht gegenseitig ausschließen ist ein paralleles Lesen möglich.
 
 ### Beispiel 2
 
@@ -50,15 +49,17 @@ Im zweiten Beispiel soll es möglich sein das gleichzeitig ausgeführte "WRITE" 
 
 	WRITE Testdokument,1,Das ist die neue Zeile 1
 	WRITE Testdokument,2,Das ist die neue Zeile 2
+	Write Executed
+	Write Executed
 	
-	überschriebene Datei:
+überschiebene Datei
+	
 	Das ist die neue Zeile 1
 	Das ist die neue Zeile 2
 
-
 ### Auswertung - Beispiel 2
 
-Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt den Thread warten und gibt ihn erst dann frei wenn kein Leser oder Schreiber mehr Zugriff auf die Datei hat.
+Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt den Thread warten und gibt ihn erst dann frei wenn kein Leser oder Schreiber mehr Zugriff auf die Datei hat. Aus dem Grund kommen die Rückgaben vom Server versetzt an.
 
 ### Beispiel 3
 
@@ -68,8 +69,8 @@ In diesem Beispiel soll die Schreiberpriorität gewährleistet werden, sollte ei
 	READ Testdokument,2
 	WRITE Testdokument,1,Die Schreiberpriorität in Zeile 1 funktioniert
 	WRITE Testdokument,2,Die Schreiberpriorität in Zeile 2 funktioniert
-	
-	Ausgabe:
+	Write Executed
+	Write Executed
 	Die Schreiberpriorität in Zeile 1 funktioniert
 	Die Schreiberpriorität in Zeile 1 funktioniert
 
@@ -87,8 +88,6 @@ Im vierten Beispiel soll es möglich sein aus mehreren Dateien lesen zu können.
 	READ Testdokument1,2
 	READ Testdokument2,1
 	READ Testdokument2,2
-	
-	Ausgabe:
 	Das ist Zeile 1 vom ersten Dokument
 	Das ist Zeile 2 vom ersten Dokument
 	Das ist Zeile 1 vom zweiten Dokument
@@ -108,8 +107,13 @@ In diesem Beispiel soll es möglich sein dass mehrere Schreibzugriffe auf eine D
 	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
 	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
 	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
+	Write executed
+	Write executed
+	Write executed
+	Write executed
 	
-	überschrieben Datei:
+überschrieben Datei:
+	
 	Das ist die neue Zeile 1 im ersten Dokument
 	Das ist die neue Zeile 2 im ersten Dokument
 	Das ist die neue Zeile 1 im zweiten Dokument
@@ -133,8 +137,10 @@ Im letzten Beispiel sollen mehrere Lese- und Schreibezugriffe auf mehrere Dateie
 	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
 	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
 	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
-	
-	Ausgabe:
+	Write executed
+	Write executed
+	Write executed
+	Write executed
 	Das ist die neue Zeile 1 im ersten Dokument
 	Das ist die neue Zeile 2 im ersten Dokument
 	Das ist die neue Zeile 1 im zweiten Dokument
