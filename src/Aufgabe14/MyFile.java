@@ -127,7 +127,6 @@ public class MyFile {
 				e.printStackTrace();
 			}
 			m.stopWrite();
-			
 		}
 		return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 	}

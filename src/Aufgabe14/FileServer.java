@@ -12,10 +12,12 @@ public class FileServer {
 	private byte[] buf = new byte[65535];
 	private DatagramSocket server;
 	private Worker[] workerPool;
+	
 	//Worker Threads erstellen und in den Pool schreiben
 	private void startWorkers(int Anzahl) {
+		FileMonitor m = new FileMonitor();
 		for(int i = 0; i<Anzahl; i++) {
-			workerPool[i] = new Worker(i, queue, server);
+			workerPool[i] = new Worker(i, queue, server, m);
 			workerPool[i].start();
 		}
 	}
