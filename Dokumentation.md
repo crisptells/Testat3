@@ -139,16 +139,11 @@ Wie in Beispiel 3 funktioniert auch dieses Beispiel. Die Schreiberpriorität wir
 
 ### Beispiel 7
 
-In diesem Beispiel wird ein falscher Dokumentname mitgegeben, danach ein richtiger. 
+In diesem Beispiel wird ein falscher Dokumentname mitgegeben. Es soll eine Antwort vom Server kommen, dass der Dateiname eventuell falsch ist. 
 
 	READ nichtTestdokument,2
-	READ Testdokument,2
-	Neue zeile 2
+	Datei nicht gefunden. Dateiname falsch?
 
 ### Auswertung - Beispiel 7
 
-Der fehlerhafte Befehl wird nicht ausgeführt, der Fehlerfreie aber trotzdem.
-
-
-
-
+Der fehlerhafte Befehl wird erkannt und die Fehlermeldung an den Client geschickt.
