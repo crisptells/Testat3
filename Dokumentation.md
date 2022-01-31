@@ -9,7 +9,7 @@ In dieser Aufgabe soll ein File-Server für Textdateien entwickelt werden.
 
 Vereinfachend gehen wir davon aus, dass dem Server ein festes, bereits existierendes Basisverzeichnis zugeordnet ist, in dem sich alle verwalteten Dateien befinden und dass er die notwendigen Zugriffsrechte besitzt. Die Textdateien sind dabei zeilenweise organisiert und beginnen mit Zeilennummer 1.
 
-Der Server soll als Worker-Pool-Server auf Port 5999 Auftr age in Form von Strings mit ”READ
+Der Server soll als Worker-Pool-Server auf Port 5999 Aufträge in Form von Strings mit ”READ
 filename,line_no” entgegennehmen, wobei line_no eine positive ganze Zahl sein muss. Daraufhin
 wird vom Server die Datei filename geöffnet, die Zeile line_no ausgelesen und zurückgeschickt.
 Außerdem soll der Server auch das Kommando ”WRITE filename,line_no,data” verstehen, bei
