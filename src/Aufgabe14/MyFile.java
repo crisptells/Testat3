@@ -59,8 +59,14 @@ public class MyFile {
 		//Aufteilen des Inhalts in Dateiname und Zeilennummer
 		String[] subArray = contentArray[1].split(",", 2);
 		//Wenn der aufgeteilte Befehl oder der aufgeteilte Inhalt != zwei Elemente groﬂ sind, stimmt etwas mit dem Anfragebefehl nicht
-		if (contentArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
-		if (subArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
+		if (contentArray.length != 2) {
+			answer = "Falsche Befehlstruktur";
+			return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
+			}
+		if (subArray.length != 2) {
+			answer = "Falsche Befehlstuktur";
+			return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
+		}
 		if (contentArray[0].equals("READ")) {
 			FileMonitor monitor = monitors.get(subArray[0]+".txt");
 			if(monitor == null) {
@@ -115,8 +121,14 @@ public class MyFile {
 		//Aufteilen des Inhalts in Dateiname, Zeilennummer und Text
 		String[] subArray = contentArray[1].split(",");
 		System.out.println("ist im write:)");
-		if (contentArray.length != 2) {return null;}
-		if (subArray.length != 3) {return null;}
+		if (contentArray.length != 2) {
+			answer = "Falsche Befehlstruktur";
+			return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
+			}
+		if (subArray.length != 3) {
+			answer = "Falsche Befehlstuktur";
+			return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
+		}
 		if (contentArray[0].equals("WRITE")) {
 			FileMonitor monitor = monitors.get(subArray[0]+".txt");
 			if(monitor == null) {

@@ -50,7 +50,7 @@ public class TestClient {
 	}
 	
 	private static void Test1() {
-		send("READ nichtTestdokument,2");
+		send("WRITE Testdokument,2,Zeile2,fehler");
 	}
 	
 	private static void Test2() {
