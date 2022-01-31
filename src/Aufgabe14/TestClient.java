@@ -20,12 +20,12 @@ public class TestClient {
 		}
 		catch (Exception e) {}
 		
-//		Test1();
+		Test1();
 //		Test2();
 //		Test3();
 //		Test4();
 //		Test5();
-		Test6();
+//		Test6();
 		
 		while (true) {
 			DatagramPacket packetReceive = new DatagramPacket(buf, buf.length);
@@ -50,8 +50,7 @@ public class TestClient {
 	}
 	
 	private static void Test1() {
-		send("READ Testdokument,2");
-		send("READ Testdokument,2");
+		send("READ nichtTestdokument,2");
 	}
 	
 	private static void Test2() {

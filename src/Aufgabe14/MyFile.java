@@ -63,6 +63,10 @@ public class MyFile {
 		if (subArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
 		if (contentArray[0].equals("READ")) {
 			FileMonitor monitor = monitors.get(subArray[0]+".txt");
+			if(monitor == null) {
+				answer = "Datei nicht gefunden. Dateiname falsch?";
+				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
+			}
 			//Datei mit dem Namen des Keys lokalisieren
 	        File myObj = new File(path+subArray[0]+".txt");
 	        Scanner myReader;
@@ -93,7 +97,8 @@ public class MyFile {
 		        DatagramPacket sendPacket = new DatagramPacket(line_data.getBytes(), line_data.getBytes().length, packet.getAddress(), packet.getPort());
 		        return sendPacket;
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				answer = "Datei nicht gefunden. Dateiname falsch?";
+				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -114,6 +119,10 @@ public class MyFile {
 		if (subArray.length != 3) {return null;}
 		if (contentArray[0].equals("WRITE")) {
 			FileMonitor monitor = monitors.get(subArray[0]+".txt");
+			if(monitor == null) {
+				answer = "Datei nicht gefunden. Dateiname falsch?";
+				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
+			}
 			String fileName = subArray[0];
 			String line_no = subArray[1];
 			String contents = subArray[2];
