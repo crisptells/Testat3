@@ -33,7 +33,10 @@ Der Server nimmt auf Port 5999 Aufträge entgegen. Es existieren zwei Text Datei
 Im ersten Beispiel soll das parallele lesen einer Datei möglich sein.
 
 ### Auswertung - Beispiel 1
-
+READ Testdokument,2
+READ Testdokument,2
+Das ist Zeile 222
+Das ist Zeile 222
 Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nicht gegenseitig aus. Aufgrund dessen ist dieses Beispiel möglich.
 
 ### Beispiel 2
