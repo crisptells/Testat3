@@ -2,7 +2,6 @@ package Aufgabe14;
 
 import java.net.DatagramPacket;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 
 public class RequestQueue {
 	
@@ -24,7 +23,6 @@ public class RequestQueue {
 		}
 		
 		returningPacket = queue.pop();
-		System.out.println("Element gefunden:)");
 		return returningPacket;
 	}
 	

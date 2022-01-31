@@ -21,15 +21,16 @@ public class FileClient {
 		}
 		catch (Exception e) {}
 		
-		
 		BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 		
 		while(true) {
 			String theLine = "";
 			try {
 				theLine = userIn.readLine();
+				theLine.trim();
 				if (theLine.equals(".")) break;
-				DatagramPacket packetSend = new DatagramPacket(theLine.getBytes(), theLine.getBytes().length, address, serverPort);
+				System.out.println(theLine);
+				DatagramPacket packetSend = new DatagramPacket(theLine.getBytes(), theLine.length(), address, serverPort);
 				socket.send(packetSend);
 				DatagramPacket packetReceive = new DatagramPacket(buf, buf.length);
 				socket.receive(packetReceive);
