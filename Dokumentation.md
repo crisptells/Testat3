@@ -27,26 +27,51 @@ Implementieren Sie den Server sowie einen kleinen Test-Client. Verwenden Sie Jav
 
 Der Server nimmt auf Port 5999 Aufträge entgegen. Es existieren zwei Text Dateien auf die zugegriffen werden. Der "READ" Befehl gibt die ausgewählte Zeile der Datei aus. Der "WRITE" Befehl überschreibt die ausgewählte Zeile der Datei. Es gibt einen Worker-Thread-Pool der die Befehle ausführt, dieser wird von dem Monitor überwacht. Der Monitor hat Schreiberpriorität.
 
+In den Beispielen besteht die Ausgabe aus zwei Teilen, dem Teil mit den abgeschickten Befehlen und der Teil mit den Antworten.
 
 ### Beispiel 1
 
 Im ersten Beispiel soll das parallele lesen einer Datei möglich sein.
 
+	READ Testdokument,1
+	READ Testdokument,2
+	Das ist Zeile 1
+	Das ist Zeile 2
+
+
 ### Auswertung - Beispiel 1
 
-Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nicht gegenseitig aus. Aufgrund dessen ist dieses Beispiel möglich.
+Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nicht gegenseitig aus. Aufgrund dessen ist dieses Beispiel möglich. Die Lese-Anforderungen wurden gleichzeitig abgeschickt und kamen auch gleichzeitig an. Da die Lese-Worker sich nicht gegenseitig ausschließen ist ein paralleles Lesen möglich.
 
 ### Beispiel 2
 
 Im zweiten Beispiel soll es möglich sein das gleichzeitig ausgeführte "WRITE" Befehle auf eine Datei ausgeführt werden können.
 
+	WRITE Testdokument,1,Das ist die neue Zeile 1
+	WRITE Testdokument,2,Das ist die neue Zeile 2
+	Write Executed
+	Write Executed
+	
+überschiebene Datei
+	
+	Das ist die neue Zeile 1
+	Das ist die neue Zeile 2
+
 ### Auswertung - Beispiel 2
 
-Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt den Thread warten und gibt ihn erst dann frei wenn kein Leser oder Schreiber mehr Zugriff auf die Datei hat.
+Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt den Thread warten und gibt ihn erst dann frei wenn kein Leser oder Schreiber mehr Zugriff auf die Datei hat. Aus dem Grund kommen die Rückgaben vom Server versetzt an.
 
 ### Beispiel 3
 
 In diesem Beispiel soll die Schreiberpriorität gewährleistet werden, sollte ein Leser- und ein Schreiberauftrg parallel abgeschickt werden.
+
+	WRITE Testdokument,2,Zeile 2
+READ Testdokument,2
+WRITE Testdokument,2,neue Zeile 2
+Write Executed
+Write Executed
+neue Zeile 2
+
 
 ### Auswertung - Beispiel 3
 
@@ -57,6 +82,12 @@ Die Schreiberpriorität wird eingehalten, da zuerst die Schreiber und dann die L
 
 Im vierten Beispiel soll es möglich sein aus mehreren Dateien lesen zu können.
 
+	READ Testdokument,2
+READ Test,2
+neue Zeile 2
+Zeile 2
+
+
 ### Auswertung - Beispiel 4
 
 Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zugegriffen wird.
@@ -66,6 +97,22 @@ Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zuge
 
 In diesem Beispiel soll es möglich sein dass mehrere Schreibzugriffe auf eine Datei abgearbeitet werden.
 
+	[18:33] Maier, Luis
+WRITE Test,2,Zeile 2
+WRITE Testdokument,2,Neue zeile 2
+Write Executed
+Write Executed
+
+
+	
+überschrieben Datei:
+	
+	Das ist die neue Zeile 1 im ersten Dokument
+	Das ist die neue Zeile 2 im ersten Dokument
+	Das ist die neue Zeile 1 im zweiten Dokument
+	Das ist die neue Zeile 2 im zweiten Dokument
+
+
 ### Auswertung - Beispiel 5
 
 Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
@@ -74,6 +121,24 @@ Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
 ### Beispiel 6
 
 Im letzten Beispiel sollen mehrere Lese- und Schreibezugriffe auf mehrere Dateien erfolgreich abgearbeitet werden können.
+
+	READ Testdokument1,1
+	READ Testdokument1,2
+	READ Testdokument2,1
+	READ Testdokument2,2
+	WRITE Testdokument1,1,Das ist die neue Zeile 1 im ersten Dokument
+	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
+	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
+	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
+	Write executed
+	Write executed
+	Write executed
+	Write executed
+	Das ist die neue Zeile 1 im ersten Dokument
+	Das ist die neue Zeile 2 im ersten Dokument
+	Das ist die neue Zeile 1 im zweiten Dokument
+	Das ist die neue Zeile 2 im zweiten Dokument	
+
 
 ### Auswertung - Beispiel 6
 
