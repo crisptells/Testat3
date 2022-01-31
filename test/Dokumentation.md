@@ -147,3 +147,15 @@ In diesem Beispiel wird ein falscher Dokumentname mitgegeben. Es soll eine Antwo
 ### Auswertung - Beispiel 7
 
 Der fehlerhafte Befehl wird erkannt und die Fehlermeldung an den Client geschickt.
+
+
+### Beispiel 8
+
+In diesem Beispiel wird ein Befehl mit fehlerhafter Struktur mitgegeben. Hier sollte eine Antwort vom Server kommen, dass die Befehlsstruktur fehlerhaft ist.
+
+	WRITE Testdokument,2,Zeile2,fehler
+	Falsche Befehlstuktur
+
+### Auswertung - Beispiel 8
+
+Die fehlerhafte Befehlsstruktur wird erkannt und die entsprechende Fehlermeldung an den Client gesendet.
