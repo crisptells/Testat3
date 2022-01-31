@@ -21,7 +21,6 @@ public class FileServer {
 	}
 	
 	public void start() {
-		DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		queue = new RequestQueue();
 		workerPool = new Worker[10];
 		
@@ -30,6 +29,7 @@ public class FileServer {
 			startWorkers(10);
 			System.out.println("threads gestartet");
 			while (true) {
+				DatagramPacket packet = new DatagramPacket(buf, buf.length);
 				server.receive(packet);
 				System.out.println("packet angekommen");
 				//System.out.println(new String(packet.getData(), 0, packet.getLength()));
