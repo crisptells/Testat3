@@ -20,11 +20,13 @@ public class Worker extends Thread{
 	@Override
 	public void run() {
 		while (true) {
+			//Worker ist gestartet und fordert ein Auftrag von der Warteschlange an
 			DatagramPacket packet = queue.getNext();
-			System.out.println(new String(packet.getData(), 0, packet.getLength()));
 			System.out.println("Worker: " + id + " started working");
+			//Worker startet die bearbeitung des Auftrages und speichert das resultierende Packet
 			DatagramPacket sendPacket = fileHandler.process(packet);
 			try {
+				//Worker schickt das Packet zum Client zurück
 				server.send(sendPacket);
 			} catch (IOException e) {
 				e.printStackTrace();

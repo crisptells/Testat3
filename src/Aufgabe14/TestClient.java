@@ -36,9 +36,10 @@ public class TestClient {
 	
 	private static void send(String content) {
 		try {
+			Thread.sleep(100);
 			System.out.println(content);
 			socket.send(new DatagramPacket(content.getBytes(), content.getBytes().length, address, serverPort));
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
