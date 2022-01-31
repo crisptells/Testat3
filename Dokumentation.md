@@ -122,22 +122,14 @@ Die Abarbeitung aus Beispiel 2 wird auch hier gewährleistet.
 
 Im letzten Beispiel sollen mehrere Lese- und Schreibezugriffe auf mehrere Dateien erfolgreich abgearbeitet werden können.
 
-	READ Testdokument1,1
-	READ Testdokument1,2
-	READ Testdokument2,1
-	READ Testdokument2,2
-	WRITE Testdokument1,1,Das ist die neue Zeile 1 im ersten Dokument
-	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
-	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
-	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
-	Write executed
-	Write executed
-	Write executed
-	Write executed
-	Das ist die neue Zeile 1 im ersten Dokument
-	Das ist die neue Zeile 2 im ersten Dokument
-	Das ist die neue Zeile 1 im zweiten Dokument
-	Das ist die neue Zeile 2 im zweiten Dokument	
+	WRITE Test,2,Zeile 2
+	READ Testdokument,2
+	WRITE Testdokument,2,Neue zeile 2
+	READ Test,2
+	Write Executed
+	Neue zeile 2
+	Write Executed
+	Zeile 2
 
 
 ### Auswertung - Beispiel 6
@@ -147,13 +139,11 @@ Wie in Beispiel 3 funktioniert auch dieses Beispiel. Die Schreiberpriorität wir
 
 ### Beispiel 7
 
-In diesem Beispiel werden die Fehler behandelt die auftreten können.
+In diesem Beispiel wird ein falscher Dokumentname mitgegeben. Es soll eine Antwort vom Server kommen, dass der Dateiname eventuell falsch ist. 
 
+	READ nichtTestdokument,2
+	Datei nicht gefunden. Dateiname falsch?
 
 ### Auswertung - Beispiel 7
 
-
-
-
-
-
+Der fehlerhafte Befehl wird erkannt und die Fehlermeldung an den Client geschickt.
