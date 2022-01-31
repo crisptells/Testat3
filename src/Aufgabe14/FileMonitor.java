@@ -40,5 +40,4 @@ public class FileMonitor {
 		writerCnt--;
 		notifyAll();
 	}
-	
 }
