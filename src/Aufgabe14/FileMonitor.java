@@ -8,8 +8,8 @@ public class FileMonitor {
     // Methode zum betreten des kritischen Abschnitts read
     public synchronized void startRead() {
         // Wenn ein Writer aktiv ist, wird solange gewartet, bis dieser fertig ist
-    	System.out.println("writerCount: " + writerCnt);
-    	System.out.println("readerCount: " + readerCnt);
+    	System.out.println("ReaderwriterCount: " + writerCnt);
+    	System.out.println("ReaderreaderCount: " + readerCnt);
         while (writerCnt > 0) {
             try {
                 wait();
@@ -54,8 +54,8 @@ public class FileMonitor {
     	System.out.println("writerCount: bei stopWrite " + writerCnt);
     	System.out.println("readerCount: bei stopWrite " + readerCnt);
         // wenn fertig mit schreiben, wird activeWriter false gesetzt
+    	writerCnt--;
         activeWriter = false;
-        writerCnt--;
         // alle werden dahingehend benachrichtigt
         notifyAll();
     }

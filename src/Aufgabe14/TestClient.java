@@ -20,7 +20,12 @@ public class TestClient {
 		}
 		catch (Exception e) {}
 		
-		Test1();
+//		Test1();
+//		Test2();
+//		Test3();
+//		Test4();
+//		Test5();
+		Test6();
 		
 		while (true) {
 			DatagramPacket packetReceive = new DatagramPacket(buf, buf.length);
@@ -36,7 +41,7 @@ public class TestClient {
 	
 	private static void send(String content) {
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 			System.out.println(content);
 			socket.send(new DatagramPacket(content.getBytes(), content.getBytes().length, address, serverPort));
 		} catch (IOException | InterruptedException e) {
@@ -45,10 +50,35 @@ public class TestClient {
 	}
 	
 	private static void Test1() {
-		send("WRITE Testdokument,2,Das ist Zeile 2");
-		send("WRITE Testdokument,2,Das ist Zeile 22");
-		send("WRITE Testdokument,2,Das ist Zeile 222");
 		send("READ Testdokument,2");
-		send("WRITE Testdokument,2,Das ist Zeile 2222");
+		send("READ Testdokument,2");
+	}
+	
+	private static void Test2() {
+		send("WRITE Testdokument,2,Zeile 2");
+		send("WRITE Testdokument,2,Neue zeile 2");
+	}
+	
+	private static void Test3() {
+		send("WRITE Testdokument,2,Zeile 2");
+		send("READ Testdokument,2");
+		send("WRITE Testdokument,2,neue Zeile 2");
+	}
+	
+	private static void Test4() {
+		send("READ Testdokument,2");
+		send("READ Test,2");
+	}
+	
+	private static void Test5() {
+		send("WRITE Test,2,Zeile 2");
+		send("WRITE Testdokument,2,Neue zeile 2");
+	}
+	
+	private static void Test6() {
+		send("WRITE Test,2,Zeile 2");
+		send("READ Testdokument,2");
+		send("WRITE Testdokument,2,Neue zeile 2");
+		send("READ Test,2");
 	}
 }

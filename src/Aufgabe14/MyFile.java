@@ -43,13 +43,14 @@ public class MyFile {
 	public DatagramPacket read(DatagramPacket packet) {
 		//Auslesen des Befehls aus dem Packet 
 		String content = readPacket(packet);
+		String answer = "Error";
 		//Aufteilen des Befehls in Anweisung (READ oder WRITE) und Inhalt
 		String[] contentArray = content.split(" ", 2);
 		//Aufteilen des Inhalts in Dateiname und Zeilennummer
 		String[] subArray = contentArray[1].split(",", 2);
 		//Wenn der aufgeteilte Befehl oder der aufgeteilte Inhalt != zwei Elemente groß sind, stimmt etwas mit dem Anfragebefehl nicht
-		if (contentArray.length != 2) {return null;}
-		if (subArray.length != 2) {return null;}
+		if (contentArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
+		if (subArray.length != 2) {return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());}
 		if (contentArray[0].equals("READ")) {
 			//Datei mit dem Namen des Keys lokalisieren
 			String userName = System.getProperty("user.name");
@@ -88,7 +89,7 @@ public class MyFile {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 	}
 	
 	public DatagramPacket write(DatagramPacket packet) {
@@ -137,6 +138,7 @@ public class MyFile {
 		        }
 		        myReader.close();
 			} catch (FileNotFoundException e) {
+				answer = "Datei nicht gefunden";
 				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			}
 			
@@ -156,6 +158,7 @@ public class MyFile {
 				fileOut.close();
 				//Austritt aus der Monitormethode zum schreiben
 				monitor.stopWrite();
+				answer = "Write Executed";
 				//Zurückgeben des Antwortpackets
 				return new DatagramPacket(answer.getBytes(), answer.getBytes().length, packet.getAddress(), packet.getPort());
 			} catch (IOException e) {
