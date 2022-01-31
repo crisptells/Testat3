@@ -8,7 +8,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class FileClient {
-	
+
 	public static final int serverPort = 5999;
 	private static byte[] buf = new byte[65535];
 	public static void main(String[] args) {
@@ -42,3 +42,4 @@ public class FileClient {
 		}
 	}
 }
+
