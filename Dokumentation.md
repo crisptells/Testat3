@@ -65,14 +65,12 @@ Das gleichzeitige Ausführen ist mit dem Monitorkonzept möglich. Dieser lässt 
 
 In diesem Beispiel soll die Schreiberpriorität gewährleistet werden, sollte ein Leser- und ein Schreiberauftrg parallel abgeschickt werden.
 
-	READ Testdokument,1
-	READ Testdokument,2
-	WRITE Testdokument,1,Die Schreiberpriorität in Zeile 1 funktioniert
-	WRITE Testdokument,2,Die Schreiberpriorität in Zeile 2 funktioniert
-	Write Executed
-	Write Executed
-	Die Schreiberpriorität in Zeile 1 funktioniert
-	Die Schreiberpriorität in Zeile 1 funktioniert
+	WRITE Testdokument,2,Zeile 2
+READ Testdokument,2
+WRITE Testdokument,2,neue Zeile 2
+Write Executed
+Write Executed
+neue Zeile 2
 
 
 ### Auswertung - Beispiel 3
@@ -84,14 +82,10 @@ Die Schreiberpriorität wird eingehalten, da zuerst die Schreiber und dann die L
 
 Im vierten Beispiel soll es möglich sein aus mehreren Dateien lesen zu können.
 
-	READ Testdokument1,1
-	READ Testdokument1,2
-	READ Testdokument2,1
-	READ Testdokument2,2
-	Das ist Zeile 1 vom ersten Dokument
-	Das ist Zeile 2 vom ersten Dokument
-	Das ist Zeile 1 vom zweiten Dokument
-	Das ist Zeile 2 vom zweiten Dokument
+	READ Testdokument,2
+READ Test,2
+neue Zeile 2
+Zeile 2
 
 
 ### Auswertung - Beispiel 4
@@ -103,14 +97,13 @@ Dies wird wie im ersten Beispiel abgearbeitet auch wenn auf mehrere Dateien zuge
 
 In diesem Beispiel soll es möglich sein dass mehrere Schreibzugriffe auf eine Datei abgearbeitet werden.
 
-	WRITE Testdokument1,1,Das ist die neue Zeile 1 im ersten Dokument
-	WRITE Testdokument1,2,Das ist die neue Zeile 2 im ersten Dokument
-	WRITE Testdokument2,1,Das ist die neue Zeile 1 im zweiten Dokument
-	WRITE Testdokument2,2,Das ist die neue Zeile 2 im zweiten Dokument
-	Write executed
-	Write executed
-	Write executed
-	Write executed
+	[18:33] Maier, Luis
+WRITE Test,2,Zeile 2
+WRITE Testdokument,2,Neue zeile 2
+Write Executed
+Write Executed
+
+
 	
 überschrieben Datei:
 	
