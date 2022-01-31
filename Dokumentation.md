@@ -34,6 +34,8 @@ Im ersten Beispiel soll das parallele lesen einer Datei möglich sein.
 
 	READ Testdokument,1
 	READ Testdokument,2
+	
+	Ausgabe:
 	Das ist Zeile 1
 	Das ist Zeile 2
 
@@ -46,10 +48,12 @@ Die Leser dürfen gleichzeitig auf eine Datei zugreifen und schließen sich nich
 
 Im zweiten Beispiel soll es möglich sein das gleichzeitig ausgeführte "WRITE" Befehle auf eine Datei ausgeführt werden können.
 
-	READ Testdokument,1
-	READ Testdokument,2
-	Das ist Zeile 1
-	Das ist Zeile 2
+	WRITE Testdokument,1,Das ist die neue Zeile 1
+	WRITE Testdokument,2,Das ist die neue Zeile 2
+	
+	überschriebene Datei:
+	Das ist die neue Zeile 1
+	Das ist die neue Zeile 2
 
 
 ### Auswertung - Beispiel 2
@@ -62,8 +66,12 @@ In diesem Beispiel soll die Schreiberpriorität gewährleistet werden, sollte ei
 
 	READ Testdokument,1
 	READ Testdokument,2
-	Das ist Zeile 1
-	Das ist Zeile 2
+	WRITE Testdokument,1,Die Schreiberpriorität in Zeile 1 funktioniert
+	WRITE Testdokument,2,Die Schreiberpriorität in Zeile 2 funktioniert
+	
+	Ausgabe:
+	Die Schreiberpriorität in Zeile 1 funktioniert
+	Die Schreiberpriorität in Zeile 1 funktioniert
 
 
 ### Auswertung - Beispiel 3
